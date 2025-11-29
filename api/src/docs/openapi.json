@@ -1,0 +1,129 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "v1.0.0",
+    "description": "This is the API documentation for the What I Do application. It provides endpoints for managing user activities, tasks, and related resources. The API is designed to be used by both internal services and external clients.",
+    "license": {
+      "name": "Copyright 2025"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:7001"
+    }
+  ],
+  "paths": {
+    "/api/v1/mpesa/stk/init": {
+      "post": {
+        "summary": "Initiate M-Pesa STK Push",
+        "tags": [
+          "Mpesa"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "mpesaPhoneNumber",
+                  "amount"
+                ],
+                "properties": {
+                  "mpesaPhoneNumber": {
+                    "type": "string",
+                    "description": "M-Pesa phone number to receive the STK push"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "description": "Amount to charge"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "STK push initiated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/TransactionResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid phone number or error initiating STK push"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/v1/mpesa/stk/callback": {
+      "post": {
+        "summary": "Handle M-Pesa STK Push callback",
+        "tags": [
+          "Mpesa"
+        ],
+        "description": "Receives callback from M-Pesa after STK push payment attempt. Always responds with 200 to acknowledge receipt.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Body": {
+                    "type": "object",
+                    "properties": {
+                      "stkCallback": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Callback received and processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Callback received successfully!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}

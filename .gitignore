@@ -1,0 +1,94 @@
+# ===========================
+# 🌐 GLOBAL SETTINGS
+# ===========================
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.history/
+*.swp
+*.swo
+*.bak
+*.old
+*.orig
+*.tmp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+contracts/.env
+api/.env
+
+# ===========================
+# ⚙️ FOUNDRY (contracts/)
+# ===========================
+
+# Build artifacts
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+contracts/forge-artifacts/
+contracts/forge-cache/
+
+# Dependencies
+contracts/lib/
+
+# Temporary / generated
+contracts/tmp/
+contracts/temp/
+
+# TypeChain / TS output                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+contracts/typechain/
+contracts/dist/
+contracts/build/
+
+
+# ===========================
+# 🧠 API (Node.js + TypeScript)
+# ===========================
+
+# Dependencies
+api/node_modules/
+api/src/node_modules/
+api/.pnpm/
+api/pnpm-lock.yaml
+api/package-lock.json
+api/yarn.lock
+
+# Build outputs 
+api/dist/
+api/build/
+api/.turbo/
+api/.tsbuildinfo
+
+# Logs
+api/*.log
+api/logs/
+api/debug.log*
+
+# Coverage / test outputs
+api/coverage/
+api/coverage.json
+api/.nyc_output/
+
+# Temp or cache files
+api/tmp/
+api/temp/
+api/.cache/
+api/.env.test
+
+# ===========================
+# 🚫 Miscellaneous
+# ===========================
+
+# System backups
+*.bak
+*.backup

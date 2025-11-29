@@ -1,0 +1,47 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dest/server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon --watch ./src --ext ts --exec ts-node ./src/server.ts",
+		"build": "tsc",
+		"start:dev": "tsx watch ./src/server.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/body-parser": "^1.19.6",
+		"@types/cors": "^2.8.19",
+		"@types/express": "latest",
+		"@types/jsonwebtoken": "^9.0.10",
+		"@types/node": "^24.9.2",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"@scalar/express-api-reference": "^0.8.24",
+		"@types/compression": "^1.8.1",
+		"@types/swagger-jsdoc": "^6.0.4",
+		"@zenetralabs/mpesa": "^0.3.0",
+		"axios": "^1.13.1",
+		"body-parser": "^2.2.0",
+		"borgen": "^2.0.0",
+		"compression": "^1.8.1",
+		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
+		"dotenv": "^17.2.3",
+		"express": "^5.1.0",
+		"express-basic-auth": "^1.2.1",
+		"express-rate-limit": "^8.2.1",
+		"jsonwebtoken": "^9.0.2",
+		"mongodb": "^7.0.0",
+		"mongoose": "^8.19.3",
+		"nodemon": "^3.1.10",
+		"swagger-jsdoc": "^6.2.8",
+		"tsx": "^4.20.6",
+		"viem": "^2.38.6"
+	}
+}
