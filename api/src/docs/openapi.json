@@ -122,8 +122,274 @@
           }
         }
       }
+    },
+    "/api/v1/teams": {
+      "get": {
+        "summary": "List all teams",
+        "tags": [
+          "Teams"
+        ],
+        "description": "Returns all teams stored in the database. If none are stored, returns a default minimal set of English teams.",
+        "responses": {
+          "200": {
+            "description": "List of teams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "teamId": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "logo": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create or update a team",
+        "tags": [
+          "Teams"
+        ],
+        "description": "Insert or update a team record. The request body should contain the `teamId` and optionally the `name`, `logo`, `leagueId`, `season` and `stats` object returned from the external API.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "teamId": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "logo": {
+                    "type": "string"
+                  },
+                  "leagueId": {
+                    "type": "number"
+                  },
+                  "season": {
+                    "type": "number"
+                  },
+                  "stats": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The upserted team",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "$ref": "#/components/schemas/Team"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/teams/{teamId}": {
+      "get": {
+        "summary": "Get single team information",
+        "tags": [
+          "Teams"
+        ],
+        "description": "Returns a single team record for the given `teamId`. Falls back to a default list if not stored.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teamId",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Numeric ID of the team"
+          },
+          {
+            "in": "query",
+            "name": "season",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Season year to query statistics for (default 2023)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Team found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "$ref": "#/components/schemas/Team"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Team not found"
+          }
+        }
+      }
+    },
+    "/api/v1/teams/{teamId}/score": {
+      "get": {
+        "summary": "Compute a team's performance score",
+        "tags": [
+          "Teams"
+        ],
+        "description": "Returns a score (0-100) computed from the stored team stats. If stats are not stored, returns an informative response.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "teamId",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "Numeric ID of the team"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Score returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "teamId": {
+                      "type": "number"
+                    },
+                    "score": {
+                      "type": "number"
+                    },
+                    "details": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/teams/scores": {
+      "get": {
+        "summary": "Get performance scores for all teams",
+        "tags": [
+          "Teams"
+        ],
+        "description": "Returns the computed scores (0-100) for all stored teams.",
+        "responses": {
+          "200": {
+            "description": "Scores for all teams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "teamId": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "components": {},
+  "components": {
+    "schemas": {
+      "Team": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "leagueId": {
+            "type": "number"
+          },
+          "season": {
+            "type": "number"
+          },
+          "stats": {
+            "type": "object"
+          }
+        }
+      },
+      "TeamScore": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  },
   "tags": []
 }
