@@ -1,5 +1,5 @@
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const ENV = {
 	PORT: Number(process.env.PORT) || 3000,
@@ -20,4 +20,5 @@ export const ENV = {
 	// API Docs Auth
 	API_DOCS_USER: process.env.API_DOCS_USER || 'admin',
 	API_DOCS_PASSWORD: process.env.API_DOCS_PASSWORD || 'password',
-}
+	FOOTBALL_DATA_API_KEY: process.env.FOOTBALL_DATA_API_KEY || '',
+};
